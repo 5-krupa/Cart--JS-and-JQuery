@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="cdn/jquery-3.6.3.js"></script>
+<script type="text/javascript" src="cdn/jquery-3.6.3.min.js"></script>
+<script type="text/javascript" src="cdn/jquery-3.6.3.slim.js"></script>
+<script type="text/javascript" src="cdn/jquery-3.6.3.slim.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-uppercase text-center mt-5">INVOICE DEMO</h1>
+		</div>
+  <div class="container text-left">
+  <div class="row">
+    <div class="col">
+      <h3 style="text-align:left;">From</h3>
+	  <p>Dhanlakshmi Enterprise</p><br>
+	  <p style="margin-top: -30px;"><b>Address:</b>Station Rd. Ahmednagar.414001</p>
+    </div>
+    <div class="col text-center">
+     <h3 style="margin-left: 120px;">To,</h3>
+	 <input type="text" placeholder="Username" style="margin-left: 400px;width: 300px;margin-top: -30px;"><br><br>
+	 <textarea placeholder="Enter User Address"style="margin-left: 400px;width: 300px;"></textarea>
+    </div>
+  </div>
+</div>
+		<div class="col-12">
+			<table class="table table-bordered table hover" id="tbody">
+				<tr>
+					<th>Item No</th>
+					<th>Item Name</th>
+					<th>Qty</th>
+					<th>Price</th>
+					<th>Total</th> 
+				</tr>
+				<tr>
+					<td>
+						<input type="number">
+					</td>
+					<td>
+						<input type="text" placeholder="Chocolate" id="">
+					</td>
+					<td>
+						<button onclick="prodqntdec('price','qnt','prod_total')">-</button>
+						<input type="number" id="qnt" value="1" style="width:50px">
+						<button onclick="prodqntinc('price','qnt','prod_total')">+</button>
+					</td>
+					<td>
+						<input type="number" onkeyup="prodtot('price','qnt','prod_total')" id="price">	
+					</td>
+					<td>
+						<input type="number" id="prod_total" class="total" readonly>
+					</td>
+				</tr>
+				<tr>
+				<td colspan="5">
+					<button type="button" id="addbtn" class="btn btn-warning">Add more</button>
+				</td>
+			    </tr>
+				<td colspan="3">
+					<h1>Notes:-</h1>
+					<textarea style="width:600px; height: 200px;"></textarea>
+				</td>
+				<td colspan="2">
+					<label>SubTotal:</label>
+					<input type="number" id="subtotal" readonly><br><br>
+					<label>Tax:</label>
+					<input type="number" id="tax" placeholder="Gst(18%) applied" readonly><br><br>
+					<label>Net Total:</label>
+					<input type="number" id="nettotal" readonly><br><br>
+					<label>Paid:</label>
+					<input type="number" id="paid"><br><br>
+					<label>Due:</label>
+					<input type="number" id="due" readonly><br><br>
+				</td>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function prodqntdec(a1,a2,a3){
+		var a= document.getElementById(a2).value;
+		a--;
+		if(a>0){
+		document.getElementById(a2).value=a;
+	    }
+	    prodtot(a1,a2,a3);
+    }
+	  function prodqntinc(a1,a2,a3){
+		var a= document.getElementById(a2).value;
+		a++;
+		document.getElementById(a2).value=a;
+		prodtot(a1,a2,a3);
+	}
+	function prodtot(price,qnt,prod_total){
+		var pr= document.getElementById(price).value;
+		var qnt1= document.getElementById(qnt).value;
+		var tot=Number(pr)*Number(qnt1);
+		document.getElementById(prod_total).value=tot;
+		subtotal();
+		nettotal();
+		// discount();
+	}
+	function subtotal(){
+		var a=document.getElementsByClassName("total");
+		console.log(a.length);
+		var tot=0
+		for(var i=0;i<a.length;i++){
+			tot+=Number(a[i].value);
+		}
+		document.getElementById('subtotal').value=tot;
+		nettotal();
+		tax();
+		// discount();
+	}
+
+	function tax(){
+		var num=Number(document.getElementById('subtotal').value);
+		// var tax1= document.getElementById(tax).value;
+		var tax1=180;
+		var t= Number(num)+Number(tax1);
+		document.getElementById(t).value=t;
+		subtotal();
+	}
+
+	function nettotal(){
+		var a=document.getElementsByClassName("total");
+		console.log(a.length);
+	var tax1 = 180
+		var tot=0
+		for(var i=0;i<a.length;i++){
+			tot+=Number(a[i].value);
+	var net= a + tax1;
+		}
+		document.getElementById('nettotal').value=tot;
+		document.getElementById('net').value=
+
+	var sub1=document.getElementsByClassName("total");
+	var tax1 = 180
+	var net= (sub1 + tax1);
+	// var net= sub1 + 180;
+	document.getElementById('net').value = net;
+	tax();
+	subtotal();
+	paid();
+	due();
+}
+function paid(){
+	var paid=Number(document.getElementById('paid').value);
+	document.getElementById('paid').value =paid;
+}
+function due(){
+	var sub=Number(document.getElementById('subtotal').value);
+	var paid1=Number(document.getElementById('paid').value);
+	var due= Number(sub1) - Number(paid1);
+	document.getElementById('due').value =due;
+	prodtot();
+	subtotal();
+	nettotal();
+	paid();
+}
+
+// $(document).ready(function(){
+// 	$('#addbtn').click(function(){
+// 			var ab=$('tr').length;
+// 			var price='price'+ab;
+// 			var qnt='qnt'+ab;
+// 			var total='prod_total'+ab;
+// 			var data='<tr><td><input type="number"></td><td><input type="text" placeholder="Chocolate" id=""></td><td><button onclick="prodqntdec('price','qnt','prod_total')">-</button><input type="number" id="qnt" value="1" style="width:50px"><button onclick="prodqntinc('price','qnt','prod_total')">+</button></td><td><input type="number" onkeyup="prodtot('price','qnt','prod_total')" id="price">	</td><td><input type="number" id="prod_total" class="total" readonly></td></tr>';
+// 			$('#tbody').append(data);
+//   })
+// })
+
+	// 	var net2=Number(document.getElementById('discount').value)/100;
+	// 	// method 2
+	// 	// var discount=10;
+	// 	// var net2=discount/100;
+	// 	var finaltotal= net1-(net1 * net2);
+	// 	document.getElementById('finaltotal').value=finaltotal;
+	// }
+
+</script>
+</body>
+</html>

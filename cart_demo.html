@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h1 class="text-uppercase text-center mt-5 mb-3">Cart Page</h1>
+		</div>
+		<div class="co-12">
+			<table class="table table-bordered table hover">
+				<tr>
+					<th>Product Name</th>
+					<th>Product Rate</th>
+					<th>Product Qty</th>
+					<th>Product Total</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" placeholder="Chocolate" id="">
+					</td>
+					<td>
+						<input type="number" onkeyup="prodtot('prod_rate','qnt','prod_total')" id="prod_rate">
+					</td>
+					<td>
+						<button onclick="prodqntdec('prod_rate','qnt','prod_total')">-</button>
+						<input type="number" id="qnt" value="1" style="width:50px">
+						<button onclick="prodqntinc('prod_rate','qnt','prod_total')">+</button>
+					</td>
+					<td>
+						<input type="number" id="prod_total" class="total" readonly>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" placeholder="Ice-cream" id="">
+					</td>
+					<td>
+						<input type="number" onkeyup="prodtot('prod_rate1','qnt1','prod_total1')" id="prod_rate1">
+					</td>
+					<td>
+						<button onclick="prodqntdec('prod_rate1','qnt1','prod_total1')">-</button>
+						<input type="number" id="qnt1" value="1" style="width:50px">
+						<button onclick="prodqntinc('prod_rate1','qnt1','prod_total1')">+</button>
+					</td>
+					<td>
+						<input type="number" id="prod_total1"class="total" readonly>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+						<h3 style="text-align:right;">Total=</h3>
+					</td>
+					<td>
+						<input type="text" id="nettotal">
+					</td>
+				</tr>
+				<tr>
+				<td colspan="3">
+						<h3 style="text-align:right;">Discount(10%)</h3>
+					</td>
+					<td>
+						<input type="text" id="discount" placeholder="">
+					</td>
+				</tr>
+				<tr>
+				<td colspan="3">
+						<h3 style="text-align:right;">Click the button to know the discount</h3>
+					</td>
+					<td>
+						<button onclick="get_final()" style="background-color:skyblue;border-radius: 5px;">Get Net Total</button>
+					</td>
+				</tr>
+				<tr>
+				<td colspan="3">
+						<h3 style="text-align:right;">Net Total=</h3>
+					</td>
+					<td>
+						<input type="text" id="finaltotal">
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	function prodqntdec(a1,a2,a3){
+		var a= document.getElementById(a2).value;
+		a--;
+		if(a>0){
+		document.getElementById(a2).value=a;
+	    }
+	    prodtot(a1,a2,a3);
+    }
+	function prodqntinc(a1,a2,a3){
+		var a= document.getElementById(a2).value;
+		a++;
+		document.getElementById(a2).value=a;
+		prodtot(a1,a2,a3);
+	}
+	function prodtot(prod_rate,qnt,prod_total){
+		var pr= document.getElementById(prod_rate).value;
+		var qnt1= document.getElementById(qnt).value;
+		var tot=Number(pr)*Number(qnt1);
+		document.getElementById(prod_total).value=tot;
+		nettotal();
+		discount();
+	}
+	function nettotal(){
+		var a=document.getElementsByClassName("total");
+		console.log(a.length);
+		var tot=0
+		for(var i=0;i<a.length;i++){
+			tot+=Number(a[i].value);
+		}
+		document.getElementById('nettotal').value=tot;
+		discount();
+	}
+	function get_final(){
+		var net1=Number(document.getElementById('nettotal').value);
+		var net2=Number(document.getElementById('discount').value)/100;
+		// method 2
+		// var discount=10;
+		// var net2=discount/100;
+		var finaltotal= net1-(net1 * net2);
+		document.getElementById('finaltotal').value=finaltotal;
+	}
+</script>
+</body>
+</html>
